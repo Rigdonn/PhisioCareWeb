@@ -1,0 +1,44 @@
+{% extends "base.njk" %}
+
+{% block titulo %}PhysioCareWeb | Patients{% endblock %}
+
+{% block contenido %}
+    {% if unauthorized %}
+        <div class="alert alert-danger">
+            <strong>Access Denied!</strong> You are not authorized to view this page.
+        </div>
+    {% else %}
+        <h1>Patient list</h1>
+        <table width="100%">
+            <div class="d-flex align-items-center">
+                <form action="/patients/find" method="GET" class="d-flex">
+                    <input type="text" class="form-control me-2" name="surname" placeholder="Search patients..." style="max-width: 300px;">Surname:
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+            <br>
+            {% for patient in patients %}
+                <tr>
+                    {% if loop.index % 2 == 0 %}
+                        <td>{{ patient.name }} {{ patient.surname }}</td>
+                    {% else %}
+                        <td>{{ patient.name }} {{ patient.surname }}</td>
+                    {% endif %}
+                    <td>
+                        <a class="btn btn-success" href="/patients/{{ patient.id }}">Patient Detail</a>
+                        <form style="display:inline" action="/patients/{{ patient.id }}" method="post">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <a class="btn btn-primary" href="/patients/{{ patient.id }}/edit">Edit</a>
+                        <a class="btn btn-secondary" href="PLACEHOLDER{{ patient.id }}">Add file</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>There are no patients to show.</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

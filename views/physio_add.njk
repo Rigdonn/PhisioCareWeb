@@ -1,0 +1,65 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Physio | New{% endblock %}
+
+{% block contenido %}
+    {% if unauthorized %}
+        <div class="alert alert-danger">
+            <strong>Access Denied!</strong> You are not authorized to view this page.
+        </div>
+    {% else %}
+        <h1>New Physio</h1>
+        {% if errores.generic %}
+            <p class="alert alert-danger">{{ errores.generic }}</p>
+        {% endif %}
+        <form action="/physios" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="login">Login Username:</label>
+                {% if errores.login %}
+                    <p class="text-danger">{{ errores.login }}</p>
+                {% endif %}
+                <input type="text" class="form-control" name="login" placeholder="Physio's login..." value="{{ data.login }}">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                {% if errores.password %}
+                    <p class="text-danger">{{ errores.password }}</p>
+                {% endif %}
+                <input type="password" class="form-control" name="password" placeholder="Physio's password..." value="{{ data.password }}">
+            </div>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                {% if errores.name %}
+                    <p class="text-danger">{{ errores.name }}</p>
+                {% endif %}
+                <input type="text" class="form-control" name="name" placeholder="Physio's name..." value="{{ data.name }}">
+            </div>
+            <div class="form-group">
+                <label for="surname">Surname:</label>
+                {% if errores.surname %}
+                    <p class="text-danger">{{ errores.surname }}</p>
+                {% endif %}
+                <input type="text" class="form-control" name="surname" placeholder="Physio's surname..." value="{{ data.surname }}">
+            </div>
+            <div class="form-group">
+                <label for="specialty">Specialty:</label>
+                {% if errores.specialty %}
+                    <p class="text-danger">{{ errores.specialty }}</p>
+                {% endif %}
+                <input type="text" class="form-control" name="specialty" placeholder="Physio's specialty..." value="{{ data.specialty }}">
+            </div>
+            <div class="form-group">
+                <label for="licenseNumber">License Number:</label>
+                {% if errores.licenseNumber %}
+                    <p class="text-danger">{{ errores.licenseNumber }}</p>
+                {% endif %}
+                <input type="text" class="form-control" name="licenseNumber" placeholder="Physio's license number..." value="{{ data.licenseNumber }}">
+            </div>
+            <div class="form-group">
+                <label for="image">Profile image:</label>
+                <input type="file" class="form-control" name="image" value="{{ data.image }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    {% endif %}
+{% endblock %}

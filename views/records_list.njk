@@ -1,0 +1,51 @@
+{% extends "base.njk" %}
+
+{% block titulo %}PhysioCareWeb | Records{% endblock %}
+
+{% block contenido %}
+    {% if unauthorized %}
+        <div class="alert alert-danger">
+            <strong>Access Denied!</strong> You are not authorized to view this page.
+        </div>
+    {% else %}
+        <h1>Record list</h1>
+        <div class="d-flex align-items-center mb-3">
+            <form action="/records/find" method="GET" class="d-flex" style="max-width: 300px;">
+                <input type="text" class="form-control me-2" name="surname" placeholder="Search records...">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+        <table class="table table-striped table-bordered" width="100%">
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                    <tr>
+                        <td>{{ record.patient.name }} {{ record.patient.surname }}</td>
+                        <td>
+                            <a class="btn btn-success" href="/records/{{ record.id }}">View details</a>
+                            {% if session.rol == 'admin' %}
+                                <form style="display:inline" action="/records/{{ record.id }}" method="post">
+                                    <input type="hidden" name="_method" value="delete"/>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            {% endif %}
+                            {% if session.rol == 'admin' or session.rol == 'physio' %}
+                                <a class="btn btn-secondary" href="/records/{{ record.id }}/appointments/new">Add appointment</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2" class="text-center">There are no records to show.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
+

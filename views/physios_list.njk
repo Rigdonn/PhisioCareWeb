@@ -1,0 +1,43 @@
+{% extends "base.njk" %}
+
+{% block titulo %}PhysioCareWeb | Physios{% endblock %}
+
+{% block contenido %}
+    {% if unauthorized %}
+        <div class="alert alert-danger">
+            <strong>Access Denied!</strong> You are not authorized to view this page.
+        </div>
+    {% else %}
+        <h1>Physios list</h1>
+        <table width="100%">
+            <div class="d-flex align-items-center">
+                <form action="/physios/find" method="GET" class="d-flex">
+                    <input type="text" class="form-control me-2" name="specialty" placeholder="Search physios by his specialty. ex:Sport" style="max-width: 300px;">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+            <br>
+            {% for physio in physios %}
+                <tr>
+                    {% if loop.index % 2 == 0 %}
+                        <td class="par">{{ physio.name }}</td>
+                    {% else %}
+                        <td class="impar">{{ physio.name }}</td>
+                    {% endif %}
+                    <td>
+                        <a class="btn btn-success" href="/physios/{{ physio.id }}">Physio Detail</a>
+                        <form style="display:inline" action="/physios/{{ physio.id }}" method="post">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <a class="btn btn-primary" href="/physios/{{ physio.id }}/edit">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>There are no physios to show.</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

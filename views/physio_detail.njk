@@ -1,0 +1,19 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Physio | Detail{% endblock %}
+
+{% block contenido %}
+    <h1>Physio {{ physio.name }}'s file</h1>
+    <div>
+        <p><strong>Name:</strong> {{ physio.name }}</p>
+        <p><strong>Surname:</strong> {{ physio.surname }}</p>
+        <p><strong>Specialty:</strong> {{ physio.specialty }}</p>
+        <p><strong>License Number:</strong> {{ physio.licenseNumber }}</p>
+        {% if physio.image %}
+            <p><strong>Profile Image:</strong>
+            <img src="/public/uploads/{{ physio.image }}" width="300px" height="300px"/></p>
+        {% endif %}
+        <br>
+        <a class="btn btn-primary" href="/physios/{{ physio.id }}/edit">Edit</a>
+    </div>
+{% endblock %}

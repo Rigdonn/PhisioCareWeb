@@ -1,0 +1,47 @@
+{% extends "base.njk" %}
+
+{% block titulo %}
+    {{ data.name }}'s file (edit)
+{% endblock %}
+
+{% block contenido %}
+    <h1>Editing {{ data.name }}'s file</h1>
+    {% if errores.generic %}
+        <p class="alert alert-danger">{{ errores.generic }}</p>
+    {% endif %}
+    <form action="/physios/{{ data.id }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            {% if errores.name %}
+                <p class="text-danger">{{ errores.name }}</p>
+            {% endif %}
+            <input type="text" class="form-control" name="name" placeholder="Physio's name..." value="{{ data.name }}">
+        </div>
+        <div class="form-group">
+            <label for="surname">Surname:</label>
+            {% if errores.surname %}
+                <p class="text-danger">{{ errores.surname }}</p>
+            {% endif %}
+            <input type="text" class="form-control" name="surname" placeholder="Physio's surname..." value="{{ data.surname }}">
+        </div>
+        <div class="form-group">
+            <label for="specialty">Specialty:</label>
+            {% if errores.specialty %}
+                <p class="text-danger">{{ errores.specialty }}</p>
+            {% endif %}
+            <input type="text" class="form-control" name="specialty" value="{{ data.specialty }}">
+        </div>
+        <div class="form-group">
+            <label for="licenseNumber">License number:</label>
+            {% if errores.licenseNumber %}
+                <p class="text-danger">{{ errores.licenseNumber }}</p>
+            {% endif %}
+            <input type="text" class="form-control" name="licenseNumber" value="{{ data.licenseNumber }}">
+        </div>
+        <div class="form-group">
+            <label for="image">Profile image:</label>
+            <input type="file" class="form-control" name="image" value="{{ data.image }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+{% endblock %}

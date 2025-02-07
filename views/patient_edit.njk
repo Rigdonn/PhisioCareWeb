@@ -1,0 +1,54 @@
+{% extends "base.njk" %}
+
+{% block titulo %}
+    {{ data.name }}'s file (edit)
+{% endblock %}
+
+{% block contenido %}
+    <h1>Editing {{ data.name }}'s file</h1>
+    {% if errores.generic %}
+        <p class="alert alert-danger">{{ errores.generic }}</p>
+    {% endif %}
+    <form action="/patients/{{ data.id }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            {% if errores.name %}
+                <p class="text-danger">{{ errores.name }}</p>
+            {% endif %}
+            <input type="text" class="form-control" name="name" placeholder="Patient's name..." value="{{ data.name }}">
+        </div>
+        <div class="form-group">
+            <label for="surname">Surname:</label>
+            {% if errores.surname %}
+                <p class="text-danger">{{ errores.surname }}</p>
+            {% endif %}
+            <input type="text" class="form-control" name="surname" placeholder="Patient's surname..." value="{{ data.surname }}">
+        </div>
+        <div class="form-group">
+            <label for="birthDate">Birth Date:</label>
+            {% if errores.birthDate %}
+                <p class="text-danger">{{ errores.birthDate }}</p>
+            {% endif %}
+            <input type="date" class="form-control" name="birthDate" value="{{ data.birthDate }}">
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            {% if errores.address %}
+                <p class="text-danger">{{ errores.address }}</p>
+            {% endif %}
+            <input type="text" class="form-control" name="address" value="{{ data.address }}">
+        </div>
+        <div class="form-group">
+            <label for="insuranceNumber">Insurance Number:</label>
+            {% if errores.insuranceNumber %}
+                <p class="text-danger">{{ errores.insuranceNumber }}</p>
+            {% endif %}
+            <input type="text" class="form-control" name="insuranceNumber" value="{{ data.insuranceNumber }}">
+        </div>
+        <div class="form-group">
+            <label for="image">Profile image:</label>
+            <input type="file" class="form-control" name="image" value="{{ data.image }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+{% endblock %}

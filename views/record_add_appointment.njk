@@ -1,0 +1,53 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Add Appointment{% endblock %}
+
+{% block contenido %}
+    <h1>Add Appointment</h1>
+    {% if errors.generic %}
+        <p class="alert alert-danger">{{ errors.generic }}</p>
+    {% endif %}
+    <form action="/records/{{ recordId }}/appointments" method="post">
+        <div class="form-group">
+            <label for="date">Appointment Date:</label>
+            {% if errors.date %}
+                <p class="text-danger">{{ errors.date }}</p>
+            {% endif %}
+            <input type="date" class="form-control" name="date" value="{{ data.date }}">
+        </div>
+        <div class="form-group">
+            <label for="physio">Physiotherapist:</label>
+            {% if errors.physio %}
+                <p class="text-danger">{{ errors.physio }}</p>
+            {% endif %}
+            <select name="physio" class="form-control">
+                <option value="">.-Select a Physiotherapist.-</option>
+                {% for physio in physios %}
+                    <option value="{{ physio._id }}">{{ physio.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="diagnosis">Diagnosis:</label>
+            {% if errors.diagnosis %}
+                <p class="text-danger">{{ errors.diagnosis }}</p>
+            {% endif %}
+            <textarea class="form-control" name="diagnosis" rows="3">{{ data.diagnosis }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="treatment">Treatment Plan:</label>
+            {% if errors.treatment %}
+                <p class="text-danger">{{ errors.treatment }}</p>
+            {% endif %}
+            <textarea class="form-control" name="treatment" rows="3">{{ data.treatment }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="observations">Observations:</label>
+            {% if errors.observations %}
+                <p class="text-danger">{{ errors.observations }}</p>
+            {% endif %}
+            <textarea class="form-control" name="observations" rows="2">{{ data.observations }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Appointment</button>
+    </form>
+{% endblock %}

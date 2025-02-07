@@ -1,0 +1,19 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Patient | Detail{% endblock %}
+
+{% block contenido %}
+    <h1>Patient {{ patient.name }}'s file</h1>
+    <div>
+        <p><strong>Name:</strong> {{ patient.name }}</p>
+        <p><strong>Surname:</strong> {{ patient.surname }}</p>
+        <p><strong>Birthdate:</strong> {{ patient.birthDate }}</p>
+        <p><strong>Address:</strong> {{ patient.address }}</p>
+        <p><strong>Insurance Number:</strong> {{ patient.insuranceNumber }}</p>
+        {% if patient.image %}
+            <p><strong>Profile Image:</strong>
+            <img src="/public/uploads/{{ patient.image }}" width="300px" height="300px"/></p>
+        {% endif %}
+        <a class="btn btn-primary" href="/patients/{{ patient.id }}/edit">Edit Patient</a>
+    </div>
+{% endblock %}

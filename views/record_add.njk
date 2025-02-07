@@ -1,0 +1,42 @@
+{% extends "base.njk" %}
+
+{% block titulo %}New Record{% endblock %}
+
+{% block contenido %}
+    {% if unauthorized %}
+        <div class="alert alert-danger">
+            <strong>Access Denied!</strong>
+            You are not authorized to view this page.
+        </div>
+    {% else %}
+        <h1>Create New Record</h1>
+        {% if errores.generic %}
+            <p class="alert alert-danger">{{ errores.generic }}</p>
+        {% endif %}
+        <form action="/records" method="post">
+            <div class="form-group">
+                <label for="patientId">Select Patient:</label>
+                {% if errores.patientId %}
+                    <p class="text-danger">{{ errores.patientId }}</p>
+                {% endif %}
+                <select class="form-control" name="patientId">
+                    <option value="">-- Select a patient --</option>
+                    {% for patient in patients %}
+                        <option value="{{ patient._id }}">
+                            {{ patient.name }} {{ patient.surname }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="medicalRecord">Medical Record Details:</label>
+                {% if errores.medicalRecord %}
+                    <p class="text-danger">{{ errores.medicalRecord }}</p>
+                {% endif %}
+                <textarea class="form-control" name="medicalRecord" rows="5">{{ data.medicalRecord }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Record</button>
+        </form>
+    {% endif %}
+{% endblock %}
+

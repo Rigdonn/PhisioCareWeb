@@ -1,0 +1,62 @@
+<div class="container mt-4">
+    {% if session and session.usuario %}
+        <div class="row mb-2">
+            <div class="col">
+                <div class="alert alert-secondary d-flex align-items-center">
+                    <form action="/patients/find" method="GET" class="d-flex me-3 align-items-center" style="max-width: 300px;">
+                        <input type="text" class="form-control me-2" name="surname" placeholder="Search patients...">
+                        <button type="submit" class="btn btn-primary">Search patient</button>
+                    </form>
+                    &nbsp;&nbsp;
+                    <a class="btn btn-dark" href="/patients">Patients</a>
+                    &nbsp;&nbsp;
+                    {% if session.rol == 'admin' or session.rol == 'physio' %}
+                        <a class="btn btn-dark" href="/patients/new">New Patient</a>
+                    {% endif %}
+                    <a class="btn btn-dark ms-auto" href="/auth/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col">
+                <div class="alert alert-secondary d-flex align-items-center">
+                    <form action="/physios/find" method="GET" class="d-flex me-3 align-items-center" style="max-width: 300px;">
+                        <input type="text" class="form-control me-2" name="specialty" placeholder="Search physios...">
+                        <button type="submit" class="btn btn-primary">Search physio</button>
+                    </form>
+                    &nbsp;&nbsp;
+                    <a class="btn btn-dark" href="/physios">Physios</a>
+                    &nbsp;&nbsp;
+                    {% if session.rol == 'admin' %}
+                        <a class="btn btn-dark" href="/physios/new">New Physio</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col">
+                <div class="alert alert-secondary d-flex align-items-center">
+                    <form action="/records/find" method="GET" class="d-flex me-3 align-items-center" style="max-width: 300px;">
+                        <input type="text" class="form-control me-2" name="surname" placeholder="Search records...">
+                        <button type="submit" class="btn btn-primary">Search record</button>
+                    </form>
+                    &nbsp;&nbsp;
+                    <a class="btn btn-dark" href="/records">Records</a>
+                    &nbsp;&nbsp;
+                    {% if session.rol == 'admin' or session.rol == 'physio' %}
+                        <a class="btn btn-dark" href="/records/new">Add record</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row mb-2">
+            <div class="col">
+                <div class="alert alert-secondary d-flex align-items-center">
+                    <a class="btn btn-dark ms-auto" href="/auth/login">Login</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
